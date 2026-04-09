@@ -1,0 +1,32 @@
+package com.StreetAlert.Street_Alert.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "fetch_logs")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class FetchLogs {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime fetchedAt = LocalDateTime.now();
+
+    private Integer articlesFetched = 0;
+
+    private Integer articlesSaved = 0;
+
+    private String status;
+
+    @Column(columnDefinition = "TEXT")
+    private String errorMessage;
+}
