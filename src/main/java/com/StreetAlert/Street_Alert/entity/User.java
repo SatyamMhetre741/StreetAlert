@@ -3,7 +3,9 @@ package com.StreetAlert.Street_Alert.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class User {
 
     @Id
@@ -26,7 +30,7 @@ public class User {
     @Column(nullable = false)
     private String passwordHash;
 
-    private String fullName;
+    private String username;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -40,16 +44,20 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-            name = "user_sectors",                     // This is the join table name
-            joinColumns = @JoinColumn(name = "user_id"),      // Foreign key to User
-            inverseJoinColumns = @JoinColumn(name = "sector_id")  // Foreign key to Sector
+            name = "user_sectors",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "sector_id")
     )
     private List<Sector> sectors = new ArrayList<>();
 
     // Helper methods
     public void addSector(Sector sector) {
-        this.sectors.add(sector);
-        sector.getUsers().add(this);     // maintain both sides
+        if (!this.sectors.contains(sector)) {
+            this.sectors.add(sector);
+        }
+        if (!sector.getUsers().contains(this)) {
+            sector.getUsers().add(this);
+        }
     }
 
     public void removeSector(Sector sector) {

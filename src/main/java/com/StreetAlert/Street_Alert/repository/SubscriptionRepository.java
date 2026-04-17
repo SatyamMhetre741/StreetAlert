@@ -1,0 +1,7 @@
+package com.StreetAlert.Street_Alert.repository;
+
+import com.StreetAlert.Street_Alert.entity.UserSubscription;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SubscriptionRepository extends JpaRepository<UserSubscription, Long> {
+}
